@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="lib/CCP_REST_SDK_JAVA_v2.7r.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry kind="lib" path="lib/mina-core-2.0.9.jar"/>
+	<classpathentry kind="lib" path="lib/mina-filter-compression-2.0.9.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.34.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.9.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
