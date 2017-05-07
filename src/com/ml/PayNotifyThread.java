@@ -46,11 +46,12 @@ public class PayNotifyThread extends Thread {
 								mchOrderStatusData.setSign(mchOrderData.getSign());
 								mchOrderStatusData.setNotify_url(mchOrderData.getNotify_url());
 								mchOrderStatusData.setFail_times(mchOrderData.getFail_times());
-	        			JSONObject getObj = JSONObject.fromObject(payNotifyData);
+	        			//JSONObject getObj = JSONObject.fromObject(payNotifyData);
 	        			String StrUrl =mchOrderData.getNotify_url();
 	        			//没同步的做同步通知
 	        			if(StrUrl!=null && !"".equals(StrUrl) && mchOrderData.getSynchronize_status()==CheckPayNofify.STATUS_INIT){
-	        				String ret= CommonUtil.postURL(StrUrl, getObj.toString());
+	        			 	//String ret= CommonUtil.postURL(StrUrl, getObj.toString());
+	        				String ret= CommonNotify.doPayNotify(mchOrderData, mchOrderData.getMch_id());
 	        				 log.info("notify TRANSACTION_ORDER_ID="+mchOrderData.getTransaction_order_id());
 	        				if(CheckPayNofify.mchOrderDataList.size()>0){
 		        				if("success".equals(ret)){

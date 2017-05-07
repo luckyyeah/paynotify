@@ -44,7 +44,7 @@ public class PayNotifyRetryThread extends Thread {
 								mchOrderStatusData.setSign(mchOrderData.getSign());
 								mchOrderStatusData.setNotify_url(mchOrderData.getNotify_url());
 								mchOrderStatusData.setFail_times(mchOrderData.getFail_times());
-	        			JSONObject getObj = JSONObject.fromObject(payNotifyData);
+	        			//JSONObject getObj = JSONObject.fromObject(payNotifyData);
 	        			String StrUrl =mchOrderData.getNotify_url();
 	        			//没同步的做同步通知
 	        			if(StrUrl!=null && !"".equals(StrUrl) && mchOrderData.getSynchronize_status()==CheckPayNofify.STATUS_FAIL){
@@ -54,7 +54,8 @@ public class PayNotifyRetryThread extends Thread {
 	        				int retryInterval= DateUtil.getDiffTime(startFailTime, DateUtil.getTime())/1000;
 	        				//判断是否到了时间间隔
 	        				if(failTimes<RETRY_TIME.length &&  retryInterval>=RETRY_TIME[failTimes-1]){
-		        				String ret= CommonUtil.postURL(StrUrl, getObj.toString());
+		        				//String ret= CommonUtil.postURL(StrUrl, getObj.toString());
+	        					String ret= CommonNotify.doPayNotify(mchOrderData, mchOrderData.getMch_id());
 		        				if(CheckPayNofify.mchOrderDataList.size()>0){
 			        				if("success".equals(ret)){
 			        					CheckPayNofify.mchOrderDataList.get(i).setSynchronize_status(CheckPayNofify.STATUS_NO);

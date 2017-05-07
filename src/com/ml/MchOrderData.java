@@ -13,6 +13,8 @@ public class MchOrderData {
 	int    synchronize_status;//同步状态
 	String   mch_id;//商户号(我们）
 	String   notify_url;//通知地址
+	String   mch_secret_key;//商户秘钥
+	String   pay_type;//支付类型	
 	int fail_times;//失败次数
 	String start_fail_time;//失败开始时间
 	int fail_retry_end;
@@ -108,6 +110,20 @@ public class MchOrderData {
 	}
 	public void setFail_retry_end(int fail_retry_end) {
 		this.fail_retry_end = fail_retry_end;
+	}
+	
+	public String getMch_secret_key() {
+		return mch_secret_key;
+	}
+	public void setMch_secret_key(String mch_secret_key) {
+		this.mch_secret_key = mch_secret_key;
+	}
+	
+	public String getPay_type() {
+		return pay_type;
+	}
+	public void setPay_type(String pay_type) {
+		this.pay_type = pay_type;
 	}
 	public boolean equals(Object obj) { 
 		 MchOrderData mchOrderData =(MchOrderData)obj;

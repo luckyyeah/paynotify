@@ -2,6 +2,7 @@ package com.ml;
 
 public class PayNotifyData {
 
+
 	String   out_trade_no;//商户订单号
 	String   transaction_id;//平台订单号（我们）
 	String   total_fee;//交易金额
@@ -10,6 +11,7 @@ public class PayNotifyData {
 	String   sign;//签名
 	String   time_end;//支付完成时间
 	String   status;//订单状态
+	String   payType;//支付类型
 	public String getOut_trade_no() {
 		return out_trade_no;
 	}
@@ -58,5 +60,12 @@ public class PayNotifyData {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getPayType() {
+		return payType;
+	}
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
+	
 
 }

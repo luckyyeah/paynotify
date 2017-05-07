@@ -9,22 +9,29 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
+
+import net.sf.json.JSONObject;
 
 
 
@@ -324,6 +331,90 @@ public static  String postURL(String strURL,String jsonData){
 		 {
 			 return false;
 		 }
+	}
+
+	public static String doPost(String url, Map<String, String> params, String charset) {
+		StringBuffer response = new StringBuffer();
+
+		PostMethod method = null;
+		try {
+			HttpClient client = new HttpClient();
+			method = new PostMethod(url);
+			method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,charset); 
+			// 设置Http Post数据
+			if (params != null) {
+				NameValuePair[] parametersBody = new NameValuePair[params.size()];
+				int index = 0;
+				for (Map.Entry<String, String> entry : params.entrySet()) {
+					parametersBody[index++] = new NameValuePair(entry.getKey(), entry.getValue());
+				}
+
+				method.setRequestBody(parametersBody);
+			}
+			method.releaseConnection();
+			client.executeMethod(method);
+			if (method.getStatusCode() == HttpStatus.SC_OK) {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(method.getResponseBodyAsStream(), charset));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					response.append(line);
+				}
+				reader.close();
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return response.toString();
+	}
+
+	public static String doGet(String url, Map<String, String> params, String charset) {
+		StringBuffer response = new StringBuffer();
+
+		GetMethod method = null;
+		try {
+			HttpClient client = new HttpClient();
+			String mParams = "";
+			// 设置Http Get数据
+			if (params != null) {
+				int iStart = 0;
+				for (Map.Entry<String, String> entry : params.entrySet()) {
+					if (iStart++ == 0) {
+						if(entry.getValue()!=null && !"".equals(entry.getValue())){
+							mParams += entry.getKey() + "=" +  URLEncoder.encode(URLEncoder.encode(entry.getValue(), charset), charset);
+						}
+					} else {
+						if(entry.getValue()!=null && !"".equals(entry.getValue())){
+							mParams += "&" + entry.getKey() + "=" +  URLEncoder.encode(URLEncoder.encode(entry.getValue(), charset), charset);
+						}
+					}
+				}
+			}
+			method = new GetMethod(url + "?" + mParams);
+
+			method.releaseConnection();
+			client.executeMethod(method);
+			if (method.getStatusCode() == HttpStatus.SC_OK) {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(method.getResponseBodyAsStream(), charset));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					response.append(line);
+				}
+				reader.close();
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return response.toString();
+	}
+
+	public static String doRequest(String url, Map<String,String> params) {
+		String ret = doPost(url, params, "utf-8");
+		if (ret == null || "".equals(ret)) {
+			ret = doGet(url, params, "utf-8");
+		}
+		return ret;
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException, DocumentException {
