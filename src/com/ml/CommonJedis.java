@@ -17,9 +17,11 @@ public class CommonJedis {
 	public static String REDIS_PROPERTY_FILE = "redisconfig.properties";
 	public static String HOST_IP = "127.0.0.1";
 	public static int PORT = 6379;
+	public static String PASSWORD = "";
 	static {
 		HOST_IP = CommonUtil.getProperty(REDIS_PROPERTY_FILE, "host_ip");
 		PORT = Integer.parseInt(CommonUtil.getProperty(REDIS_PROPERTY_FILE, "port"));
+		PASSWORD = CommonUtil.getProperty(REDIS_PROPERTY_FILE, "password");
 
 	}
 
@@ -32,6 +34,7 @@ public class CommonJedis {
 		Jedis jedis = null;
 		try {
 			jedis = new Jedis(HOST_IP, PORT);
+			jedis.auth(PASSWORD);
 
 		} catch (Exception e) {
 			logger.error("getResource:{}", e);

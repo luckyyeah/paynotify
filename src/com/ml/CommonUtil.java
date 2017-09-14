@@ -411,10 +411,10 @@ public static  String postURL(String strURL,String jsonData){
 
 	public static String doRequest(String url, Map<String,String> params) {
 		String ret = doPost(url, params, "utf-8");
-		if (ret == null || "".equals(ret)) {
+		if (ret == null || "".equals(ret)|| !"success".equals(ret)) {
 			ret = doGet(url, params, "utf-8");
 		}
-		return ret;
+ 		return ret;
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException, DocumentException {
