@@ -11,8 +11,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -26,12 +24,11 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.DocumentException;
-
-import net.sf.json.JSONObject;
 
 
 
@@ -339,6 +336,12 @@ public static  String postURL(String strURL,String jsonData){
 		PostMethod method = null;
 		try {
 			HttpClient client = new HttpClient();
+			HttpConnectionManagerParams managerParams = client 
+					   .getHttpConnectionManager().getParams(); 
+					 // 设置连接超时时间(单位毫秒) 
+					 managerParams.setConnectionTimeout(1000); 
+					 // 设置读数据超时时间(单位毫秒) 
+					 managerParams.setSoTimeout(1000); 
 			method = new PostMethod(url);
 			method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,charset); 
 			// 设置Http Post数据
@@ -363,7 +366,7 @@ public static  String postURL(String strURL,String jsonData){
 				reader.close();
 			}
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return response.toString();
 	}
@@ -374,6 +377,12 @@ public static  String postURL(String strURL,String jsonData){
 		GetMethod method = null;
 		try {
 			HttpClient client = new HttpClient();
+			HttpConnectionManagerParams managerParams = client 
+					   .getHttpConnectionManager().getParams(); 
+					 // 设置连接超时时间(单位毫秒) 
+					 managerParams.setConnectionTimeout(1000); 
+					 // 设置读数据超时时间(单位毫秒) 
+					 managerParams.setSoTimeout(1000); 
 			String mParams = "";
 			// 设置Http Get数据
 			if (params != null) {
@@ -404,15 +413,20 @@ public static  String postURL(String strURL,String jsonData){
 				reader.close();
 			}
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return response.toString();
 	}
 
 	public static String doRequest(String url, Map<String,String> params) {
-		String ret = doPost(url, params, "utf-8");
-		if (ret == null || "".equals(ret)|| !"success".equals(ret)) {
-			ret = doGet(url, params, "utf-8");
+		String ret = "";
+		try{
+		    ret = doPost(url, params, "utf-8");
+			if (ret == null || "".equals(ret)|| !"success".equals(ret)) {
+				ret = doGet(url, params, "utf-8");
+			}
+		}catch(Exception ex){
+			
 		}
  		return ret;
 	}

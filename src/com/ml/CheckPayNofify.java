@@ -111,6 +111,9 @@ public class CheckPayNofify {
 			}
 
 			flag =true;
+			if(mchOrderDataStatusList.size() ==0 && mchOrderDataList.size()==0 && mchOrderDataSaveList.size() > 0){
+				mchOrderDataSaveList =new ArrayList<MchOrderData>();
+			}
 		}
 		catch(Exception ex){
 			  log.error("#ERROR# :更新同步状态记录失败！", ex); 
