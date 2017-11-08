@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class CheckPayNofify {
-	public static final String SQL_NOT_NOTIFY = "SELECT A.*, B.NOTIFY_URL, B.MCH_SECRET_KEY FROM transaction_order A INNER JOIN  mch_base B  ON LEFT(A.OUT_TRADE_NO,5)=B.MCH_ID  WHERE SYNCHRONIZE_STATUS=0 AND TIME(A.ADD_TIME) >= DATE_SUB( CURRENT_TIME (), INTERVAL CHECK_INTERVAL_TIMES MINUTE ) AND TIME(A.ADD_TIME) <= DATE_SUB( CURRENT_TIME (), INTERVAL 1 SECOND )";
+	public static final String SQL_NOT_NOTIFY = "SELECT A.*, B.NOTIFY_URL, B.MCH_SECRET_KEY FROM transaction_order A INNER JOIN  mch_base B  ON LEFT(A.OUT_TRADE_NO,5)=B.MCH_ID  WHERE SYNCHRONIZE_STATUS=0 AND TIME(A.ADD_TIME) >= DATE_SUB( CURRENT_TIME (), INTERVAL CHECK_INTERVAL_TIMES MINUTE ) AND TIME(A.ADD_TIME) <= DATE_SUB( CURRENT_TIME (), INTERVAL 5 SECOND )";
 	public static final String SQL_UPDATE_NOTIFY_FLAG = "UPDATE transaction_order SET SYNCHRONIZE_STATUS=@SYNCHRONIZE_STATUS WHERE TRANSACTION_ORDER_ID='@TRANSACTION_ORDER_ID' AND SYNCHRONIZE_STATUS=0 ;";
 	private static final Logger log = (Logger) LoggerFactory.getLogger(CheckPayNofify.class);
 	public static final int STATUS_NO =1; 

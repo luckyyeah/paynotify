@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -339,9 +340,9 @@ public static  String postURL(String strURL,String jsonData){
 			HttpConnectionManagerParams managerParams = client 
 					   .getHttpConnectionManager().getParams(); 
 					 // 设置连接超时时间(单位毫秒) 
-					 managerParams.setConnectionTimeout(1000); 
+					 managerParams.setConnectionTimeout(2000); 
 					 // 设置读数据超时时间(单位毫秒) 
-					 managerParams.setSoTimeout(1000); 
+					 managerParams.setSoTimeout(2000); 
 			method = new PostMethod(url);
 			method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,charset); 
 			// 设置Http Post数据
@@ -366,7 +367,7 @@ public static  String postURL(String strURL,String jsonData){
 				reader.close();
 			}
 		} catch (IOException ex) {
-			//ex.printStackTrace();
+			ex.printStackTrace();
 		}
 		return response.toString();
 	}
@@ -380,9 +381,9 @@ public static  String postURL(String strURL,String jsonData){
 			HttpConnectionManagerParams managerParams = client 
 					   .getHttpConnectionManager().getParams(); 
 					 // 设置连接超时时间(单位毫秒) 
-					 managerParams.setConnectionTimeout(1000); 
+					 managerParams.setConnectionTimeout(2000); 
 					 // 设置读数据超时时间(单位毫秒) 
-					 managerParams.setSoTimeout(1000); 
+					 managerParams.setSoTimeout(2000); 
 			String mParams = "";
 			// 设置Http Get数据
 			if (params != null) {
@@ -413,7 +414,7 @@ public static  String postURL(String strURL,String jsonData){
 				reader.close();
 			}
 		} catch (IOException ex) {
-			//ex.printStackTrace();
+			ex.printStackTrace();
 		}
 		return response.toString();
 	}
@@ -432,11 +433,16 @@ public static  String postURL(String strURL,String jsonData){
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException, DocumentException {
-/*		getStringOfStr("m_ios290");
-		System.out.println(getRandomString(0,9,10));*/
-		for(int i=0;i<50000;i++){
+
+		Map mapData =new HashMap();
+		mapData.put("out_trade_no", "2017092901530729867");
+		mapData.put("transaction_id", "10032b112017092901530729867");
+		mapData.put("total_fee", "200");
+		mapData.put("time_end", "20170929015317");
+		mapData.put("status", "0");
+		mapData.put("sign", "3c20338e31a0eb55148e2fec522d917b");
+		String ret = CommonUtil.doRequest("http://127.0.0.1:3005/ordernotify", mapData);
+		System.out.println(ret);
 		
-			System.out.println("i="+i);
-		}
 	}
 }
